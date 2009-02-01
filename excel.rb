@@ -9,7 +9,7 @@ module Sheet
 
   def set_value(x , y , value)
     x_t = convert_numeric_to_s(x)
-    # ”z—ñ‚Å“n‚Á‚Ä‚«‚½ê‡
+    # é…åˆ—ã§æ¸¡ã£ã¦ããŸå ´åˆ
     if value.kind_of?(Array)
       for i in 0...value.length
         self.Cells.Item(y,x_t).Value = value[i]
@@ -20,21 +20,21 @@ module Sheet
     end
   end
   #
-  # ƒZƒ‹‚Ì’l‚ğæ“¾‚·‚é
+  # ã‚»ãƒ«ã®å€¤ã‚’å–å¾—ã™ã‚‹
   #
   def get_value(x , y)
     self.Cells.Item(y,x).Value
   end
   #
-  # ƒZƒ‹‚ÌƒtƒH[ƒ}ƒbƒg‚ğw’è‚·‚é
-  # @ : •¶š—ñ
+  # ã‚»ãƒ«ã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã‚’æŒ‡å®šã™ã‚‹
+  # @ : æ–‡å­—åˆ—
   #
   def set_format(x , y , format)
     self.Cells.Item(y,x).NumberFormatLocal = format
   end
   #
-  # —ñ•‚ğİ’è‚·‚é
-  # —á)
+  # åˆ—å¹…ã‚’è¨­å®šã™ã‚‹
+  # ä¾‹)
   # excel.set_width("A1" , "B1" , 100)
   #
   def set_width(from , to , width)
@@ -69,31 +69,31 @@ module Sheet
     self.Range(term).MergeCells = true
   end
   #
-  # ƒZƒ‹‚ÌƒtƒHƒ“ƒgF‚ğİ’è‚·‚é
-  # color : 16i‚ÌFî•ñ 
-  #         Ô #FF0000
-  #         —Î #00FF00
-  #         Â #0000FF
+  # ã‚»ãƒ«ã®ãƒ•ã‚©ãƒ³ãƒˆè‰²ã‚’è¨­å®šã™ã‚‹
+  # color : 16é€²ã®è‰²æƒ…å ± 
+  #         èµ¤ #FF0000
+  #         ç·‘ #00FF00
+  #         é’ #0000FF
   #
   def set_color(x , y , color)
     x = convert_numeric_to_s(x)
-    # F‚ğƒZƒbƒg‚·‚é
+    # è‰²ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
     self.Cells.Item(y,x).Font.Color = convert_color_tohex(color)
   end
   # 
-  # ”wŒiF‚ğİ’è‚·‚é
-  # color : 16i‚ÌFî•ñ 
-  #         Ô #FF0000
-  #         —Î #00FF00
-  #         Â #0000FF
+  # èƒŒæ™¯è‰²ã‚’è¨­å®šã™ã‚‹
+  # color : 16é€²ã®è‰²æƒ…å ± 
+  #         èµ¤ #FF0000
+  #         ç·‘ #00FF00
+  #         é’ #0000FF
   #
   def set_background_color(x , y , color)
     x = convert_numeric_to_s(x)
-    # ”wŒiF‚ğƒZƒbƒg‚·‚é
+    # èƒŒæ™¯è‰²ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
     self.Cells.Item(y,x).Interior.Color = convert_color_tohex(color)
   end
   #
-  # sî•ñ
+  # è¡Œæƒ…å ±
   #
   def row(index=1)
     return Row.new(self , index)
@@ -102,25 +102,25 @@ module Sheet
 
   private
   def convert_color_tohex(color)
-    # #‚ğí‚é
+    # #ã‚’å‰Šã‚‹
     if color =~ /^#/
       color = color.slice(1 , color.length)
     end
-    # 6ƒoƒCƒg–³‚¢ê‡‚Í0
+    # 6ãƒã‚¤ãƒˆç„¡ã„å ´åˆã¯0
     if color.length != 6
       return 0
     end
-    # R ‚Æ B ‚ğ“ü‚ê‘Ö‚¦
+    # R ã¨ B ã‚’å…¥ã‚Œæ›¿ãˆ
     color = color[4,2] + color[2,2] + color[0,2]
-    # 16i‚É–ß‚µ‚Ä•Ô‹p
+    # 16é€²ã«æˆ»ã—ã¦è¿”å´
     return color.hex
   end
 
   def convert_numeric_to_s(x)
     if x.kind_of?(Numeric) && x > 256
-      throw Exception.new("256ˆÈã‚Ì”’l‚Íw’è‚Å‚«‚Ü‚¹‚ñ")
+      throw Exception.new("256ä»¥ä¸Šã®æ•°å€¤ã¯æŒ‡å®šã§ãã¾ã›ã‚“")
     end
-    # ”’l•ÏŠ·
+    # æ•°å€¤å¤‰æ›
     if x.kind_of? Numeric
       tmp = "A"
       for i in 1...x
@@ -137,7 +137,7 @@ class Row
 
   def initialize(sheet , index=1)
     if index < 1
-      throw Exception.new("ŠJnƒCƒ“ƒfƒbƒNƒX‚Í 1 ˆÈã‚Å‚·B -> " + index)
+      throw Exception.new("é–‹å§‹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã¯ 1 ä»¥ä¸Šã§ã™ã€‚ -> " + index)
     end
     @sheet = sheet
     @index = index
@@ -183,9 +183,9 @@ end
 class Excel
   def initialize(path=nil)
     begin
-      # ExcelƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ğì¬‚·‚é
+      # Excelã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ä½œæˆã™ã‚‹
       @excel = WIN32OLE.new('Excel.Application')
-      # ƒ[ƒNƒuƒbƒN‚ğ’Ç‰Á‚·‚é
+      # ãƒ¯ãƒ¼ã‚¯ãƒ–ãƒƒã‚¯ã‚’è¿½åŠ ã™ã‚‹
       if path
         @book  = @excel.Workbooks.open(path)
       else
@@ -198,9 +198,9 @@ class Excel
   end
 
   def add_sheet(name)
-    # ƒ[ƒNƒuƒbƒN‚ÉƒV[ƒg‚ğ‚ğ’Ç‰Á‚·‚é
+    # ãƒ¯ãƒ¼ã‚¯ãƒ–ãƒƒã‚¯ã«ã‚·ãƒ¼ãƒˆã‚’ã‚’è¿½åŠ ã™ã‚‹
     @book.Worksheets.Add
-    # ƒV[ƒg‚Ì–¼‘O‚ğ•ÏX‚·‚é
+    # ã‚·ãƒ¼ãƒˆã®åå‰ã‚’å¤‰æ›´ã™ã‚‹
     @book.Worksheets(1).Name = name
 
     return @book.Worksheets(1).extend Sheet
@@ -213,8 +213,8 @@ class Excel
   def get_sheet_at(index)
     return @book.Worksheets(index).extend Sheet
   end
-  # ƒtƒ@ƒCƒ‹‚ğ•Û‘¶‚·‚é
-  # path : ƒtƒ@ƒCƒ‹‚ğ•Û‘¶‚·‚éâ‘ÎƒpƒX‚ğw’è‚·‚é
+  # ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä¿å­˜ã™ã‚‹
+  # path : ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä¿å­˜ã™ã‚‹çµ¶å¯¾ãƒ‘ã‚¹ã‚’æŒ‡å®šã™ã‚‹
   def save(path)
     @book.SaveAs(path)
   end
